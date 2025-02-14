@@ -63,7 +63,7 @@ module "ecs" {
       assign_public_ip                   = true
       deployment_minimum_healthy_percent = 100
       subnet_ids                         = data.aws_subnet_ids.default.ids # Use default subnets
-      security_group_ids                 = [aws_security_group.ecs_sg.id] # Reference to the security group
+      security_group_ids                 = [aws_security_group.ecs_sg.id]  # Reference to the security group
     }
   }
 }
