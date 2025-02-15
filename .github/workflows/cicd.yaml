@@ -9,7 +9,7 @@ env:
   AWS_REGION: ap-southeast-1
 
 jobs:
-  build-and-push:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -51,3 +51,10 @@ jobs:
         run: |
           echo "Pushed Image: ${{ env.IMAGE_TAG }}:${{ github.sha }}"
           echo "Latest Image: ${{ env.IMAGE_TAG }}:latest"
+
+      - name: Update ECS Service
+        uses: aws-actions/amazon-ecs-update-service@v1
+        with:
+          cluster: ${{ vars.ECS_CLUSTER }}
+          service: ${{ vars.ECS_SERVICE }}
+          force-new-deployment: true
