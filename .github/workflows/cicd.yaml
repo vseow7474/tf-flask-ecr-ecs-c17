@@ -29,7 +29,7 @@ jobs:
 
       - name: Set image tag
         run: |
-          echo "IMAGE_TAG=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ var.ECR_REPOSITORY }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ vars.ECR_REPOSITORY }}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
