@@ -31,6 +31,7 @@ output "account_id" {
   value = data.aws_caller_identity.current.account_id
 }
 
+data "aws_region" "current" {}
 
 # Create a security group for ECS tasks in the default VPC
 resource "aws_security_group" "ecs_sg" {
