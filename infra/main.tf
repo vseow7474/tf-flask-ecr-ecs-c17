@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.aws_region
-}
-
 # Local variable to define prefix for naming resources
 locals {
   prefix = "flask-app"
