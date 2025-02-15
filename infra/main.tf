@@ -14,8 +14,15 @@ data "aws_vpc" "default" {
   default = true
 }
 
-data "aws_subnet_ids" "default" {
-  vpc_id = data.aws_vpc.default.id
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
+output "subnet_ids" {
+  value = data.aws_subnets.default.ids
 }
 
 # Create a security group for ECS tasks in the default VPC
@@ -58,7 +65,7 @@ module "ecs" {
       }
       assign_public_ip                   = true
       deployment_minimum_healthy_percent = 100
-      subnet_ids                         = data.aws_subnet_ids.default.ids # Use default subnets
+      subnet_ids                         = data.aws_subnets.default.ids # Use default subnets
       security_group_ids                 = [aws_security_group.ecs_sg.id]  # Reference to the security group
     }
   }
