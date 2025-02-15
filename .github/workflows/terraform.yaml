@@ -35,7 +35,7 @@ jobs:
         run: terraform init -chdir=./infra
 
       - name: Terraform Validate
-        run: terraform validate ./infra
+        run: terraform validate -chdir=./infra
 
       # - uses: terraform-linters/setup-tflint@v3
       #   with:
