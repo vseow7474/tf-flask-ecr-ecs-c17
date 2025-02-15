@@ -1,6 +1,6 @@
 # Local variable to define prefix for naming resources
 locals {
-  prefix = "flask-app"
+  prefix = "vic-flask-app"
 }
 
 # Create an ECR repository
@@ -56,11 +56,11 @@ module "ecs" {
   }
 
   services = {
-    "flask-app-service" = { # ECS service name -> Change
+    "vic-flask-app-service" = { # ECS service name -> Change
       cpu    = 512
       memory = 1024
       container_definitions = {
-        "flask-app-container" = { # Container name -> Change
+        "vic-flask-app-container" = { # Container name -> Change
           essential = true
           image     = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${local.prefix}-ecr:latest"
           port_mappings = [
@@ -91,5 +91,5 @@ output "ecs_cluster_name" {
 
 # Output the ECS service name for reference
 output "ecs_service_name" {
-  value = "flask-app-service"
+  value = "vic-flask-app-service"
 }
