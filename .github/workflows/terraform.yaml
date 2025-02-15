@@ -37,26 +37,32 @@ jobs:
           terraform init
 
       - name: Terraform Validate
-        run: terraform validate -chdir=./infra
+        run: |
+          cd infra
+          terraform validate
 
-      # - uses: terraform-linters/setup-tflint@v3
-      #   with:
-      #     tflint_version: latest
+      - uses: terraform-linters/setup-tflint@v3
+        with:
+          tflint_version: latest
 
-      # - name: Show version
-      #   run: tflint --version
+      - name: Show version
+        run: tflint --version
 
-      # - name: Init TFLint
-      #   run: tflint --init
+      - name: Init TFLint
+        run: tflint --init
 
-      # - name: Run TFLint
-      #   run: tflint -f compact
+      - name: Run TFLint
+        run: tflint -f compact
 
       - name: Terraform Plan
-        run: terraform plan ./infra
+        run: |
+          cd infra
+          terraform plan -out=tfplan
 
       - name: Terraform Apply
-        run: terraform apply --auto-approve
+        run: |
+          cd infra
+          terraform apply --auto-approve tfplan
 
     # steps:
     # - name: Checkout code
