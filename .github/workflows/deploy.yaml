@@ -9,7 +9,7 @@ env:
   AWS_REGION: ap-southeast-1
 
 jobs:
-  deploy:
+  build and push:
     runs-on: ubuntu-latest
 
     steps:
@@ -53,11 +53,8 @@ jobs:
           echo "Latest Image: ${{ env.IMAGE_TAG }}:latest"
 
       - name: Update ECS Service
-        uses: aws-actions/amazon-ecs-update-service@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-          cluster: ${{ vars.ECS_CLUSTER }}
-          service: ${{ vars.ECS_SERVICE }}
-          force-new-deployment: true
+        run: |
+          aws ecs update-service --cluster "$ECS_CLUSTER" --service "$ECS_SERVICE" --force-new-deployment
+        env:
+          ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}
+          ECS_SERVICE: ${{ vars.ECS_SERVICE }}
