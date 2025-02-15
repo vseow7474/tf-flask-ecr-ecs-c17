@@ -32,7 +32,8 @@ jobs:
         run: terraform fmt -check
 
       - name: Terraform Init
-        run: terraform init -chdir=./infra
+        run: cd infra
+          terraform init
 
       - name: Terraform Validate
         run: terraform validate -chdir=./infra
