@@ -25,6 +25,13 @@ output "subnet_ids" {
   value = data.aws_subnets.default.ids
 }
 
+data "aws_caller_identity" "current" {}
+
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+
+
 # Create a security group for ECS tasks in the default VPC
 resource "aws_security_group" "ecs_sg" {
   name        = "ecs_security_group"
