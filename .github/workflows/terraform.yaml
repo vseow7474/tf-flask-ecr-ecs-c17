@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "infra/**" # Trigger on changes to the infra directory
+    # paths:
+    #   - "infra/**" # Trigger on changes to the infra directory
 
 env:
   AWS_REGION: ap-southeast-1
