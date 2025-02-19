@@ -52,6 +52,18 @@ jobs:
           echo "Pushed Image: ${{ env.IMAGE_TAG }}:${{ github.sha }}"
           echo "Latest Image: ${{ env.IMAGE_TAG }}:latest"
 
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition ${{ vars.TASK_DEF }} --query taskDefinition > task-definition.json
+
+      - name: Fill in the new image ID in the ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: ${{ vars.CONTAINER_NAME }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
+
       - name: Update ECS Service
         run: |
           aws ecs update-service --cluster "$ECS_CLUSTER" --service "$ECS_SERVICE" --force-new-deployment
